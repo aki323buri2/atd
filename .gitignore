@@ -3,5 +3,7 @@
 /regex-2.7-bin
 /*/bin
 /*/obj
-/json2pdf
-#ファイル
+/json2pdf/pdf/*
+/json2pdf/Python34
+/json2pdf/reportlab
+/json2pdf/__pychache__
