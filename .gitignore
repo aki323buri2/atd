@@ -1,3 +1,5 @@
 #ディレクトリ
-/bin
-/obj
+/openssl-install
+/regex-2.7-bin
+/*/bin
+/*/obj
