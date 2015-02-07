@@ -1,0 +1,65 @@
+
+
+          ASP      V24     FDG        V14-L02 (3720)  FAXFILPF                            14.05.13/14.49.42   PAGE-0001
+
+
+          COBOL  IMAGE  LIST     (NOTE: < > INDICATES PROGRAMMER DEFINED NAME)
+
+
+              DESCRIPTION OF FD (FILE DESCRIPTION) ENTRY
+
+                    FD <FILE-NAME> LABEL RECORD STANDARD
+                                   BLOCK CONTAINS   1  RECORDS.
+
+
+                    01  REC.
+                        02  KNRINO               PIC 9(6).
+                        02  KNRNOR               PIC 9(2).
+                        02  SYOZOK               PIC 9(3).
+                        02  BUKAME               PIC N(5).
+                        02  TELNO                PIC X(15).
+                        02  FAXNO                PIC X(15).
+                        02  URIYMD               PIC 9(6).
+                        02  HATNO                PIC 9(5).
+                        02  HATMEI               PIC N(10).
+                        02  HFAXNO               PIC X(15).
+                        02  TOKUNO               PIC 9(5).
+                        02  TOKUME               PIC N(10).
+                        02  SHCDS                PIC 9(5).
+                        02  SHCDT                PIC X(13).
+                        02  URIKU                PIC 9(1).
+                        02  JYUYMD               PIC 9(6).
+                        02  JTANKA               PIC 9(7)V9(2).
+                        02  SYOYMD               PIC 9(6).
+                        02  DENYMD               PIC 9(6).
+                        02  SYATEN               PIC X(6).
+                        02  SYAMEI               PIC N(6).
+                        02  BIN                  PIC 9(1).
+                        02  SHNMS                PIC X(20).
+                        02  SHNM1                PIC X(20).
+                        02  SHNM2                PIC X(20).
+                        02  DENSYU               PIC 9(2).
+                        02  BUNRUI               PIC 9(4).
+                        02  TANTO                PIC 9(5).
+                        02  TANTOM               PIC N(4).
+                        02  SHIREN               PIC 9(5).
+                        02  SIREME               PIC N(10).
+                        02  HARAIB               PIC 9(6).
+                        02  HARAIJ               PIC 9(1).
+                        02  SIRTBL.
+                         03  STANI               PIC X(1).
+                         03  SIRIME              PIC 9(5)V9(2).
+                         03  SIRISU              PIC 9(5).
+                         03  SKOSU               PIC 9(5)V9(2).
+                         03  SSURYO              PIC 9(5)V9(2).
+                         03  STANKA              PIC 9(7)V9(2).
+                         03  SKIN                PIC 9(9).
+                        02  KU1                  PIC 9(2).
+                        02  KU2                  PIC 9(3)                       PACKED-DECIMAL.
+                        02  HATFLG               PIC X(1).
+                        02  LSTFLG               PIC X(3).
+                        02  FLG1                 PIC X(2).
+                        02  FLG2                 PIC X(2).
+                        02  FLG3                 PIC X(2).
+                        02  AKI                  PIC X(43).
+
