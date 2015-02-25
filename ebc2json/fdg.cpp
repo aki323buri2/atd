@@ -4,6 +4,7 @@
 #include <sstream>
 #include "atd.regex.h"
 #include <set>
+#include "ebcdic.h"
 //====================================================
 //= strut fdg::field
 //====================================================
@@ -42,7 +43,7 @@ string fdg::search(const string &ebc)
 	return s;
 }
 //====================================================
-//= strut fdg::field
+//= struct fdg::field
 //====================================================
 fdg::field::field()
 : lv(0)
@@ -57,8 +58,100 @@ fdg::field::field()
 , real(0)
 , offset(0)
 { }
+string fdg::field::translate(const string &ebc) const
+{
+	string sjis;
+	translate(ebc, sjis);
+	return sjis;
+}
+void fdg::field::translate(const string &ebc, string &sjis) const
+{
+	//タイプ別変換処理
+	bool kanji = (type == "N");
+	if (kanji)
+	{
+		//============================================
+		//= JEF漢字
+		//============================================
+		for (string::const_iterator i = ebc.begin(), e = ebc.end()
+			; i != e; ++i)
+		{
+			BYTE hi = (BYTE)*i;
+			BYTE lo = (BYTE)*(++i);
+			WORD jef = MAKEWORD(lo, hi);
+			WORD conv = ebcdic::jef::tosjis(jef);
+			sjis += (char)HIBYTE(conv);
+			sjis += (char)LOBYTE(conv);
+		}
+	}
+	else if (pack)
+	{
+		//============================================
+		//= パック項目
+		//============================================
+		for (string::const_iterator i = ebc.begin(), e = ebc.end()
+			; i != e; ++i)
+		{
+			//16進表記に変換
+			sjis += string::format("%02x", (uchar)(*i) & 0xff);
+		}
+	}
+	else
+	{
+		//============================================
+		//= 半角英数 (PIC 9 or X)
+		//============================================
+		for (string::const_iterator i = ebc.begin(), e = ebc.end()
+			; i != e; ++i)
+		{
+			sjis += (char)ebcdic::tosjis((BYTE)(*i));
+		}
+	}
+
+	if (pack || sig)
+	{
+		//============================================
+		//= パック項目、符号付き項目の末尾１バイト処理
+		//============================================
+		//末尾１文字ポップ
+		string tail = sjis.pop(-1);
+		//パックの場合、桁数を調整
+		if (pack && (int)sjis.length() > (left + right))
+		{
+			sjis = sjis.substr(sjis.length() - (left + right));
+		}
+		//末尾処理
+		if (pack)
+		{
+			//末尾の１文字で符号判定
+			if (tail == "D") sjis = "-" + sjis;
+		}
+		else 
+		{
+			//符号付き項目の判定
+			// A : +0  J : -0
+			// B : +1  K : -1
+			// C : +2  L : -2
+			//   ...     ...
+			// I: +9   R : -9
+			int def = tail[0] - 'A';
+			if (def > 10) sjis = "-" + sjis;
+			sjis += string::format("%d", def % 10);
+		}
+	}
+
+	if (right)
+	{
+		//============================================
+		//= 小数点
+		//============================================
+		string dec = sjis.pop(-right);
+		sjis += ".";
+		sjis += dec;
+	}		
+}
 //====================================================
-//= strut fdg::fields
+//= struct fdg::fields
 //====================================================
 fdg::fields::fields()
 : offset(0)

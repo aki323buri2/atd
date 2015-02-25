@@ -54,111 +54,21 @@ void translator::translate(std::istream &is)
 			//JSON追記（キーと値のペアの始まり）
 			os << "\t\t";
 			os << (i - b ? ", " : "  ");
-
+			
 			//ナビゲータによる変換
 			const fdg::field &field = *i;
 			int		real	= field.real	;
 			int		offset	= field.offset	;
-			int		left	= field.left	;
-			int		right	= field.right	;
-			bool	pack	= field.pack	;
-			bool	sig		= field.sig		;
-			string	type	= field.type	;
 			string	key		= field.key		;
-
+			
 			//変換対象EBCDIC文字列切り出し
 			string ebc = buf.substr(offset, real);
-
+			
 			//変換後SJIS文字列格納用
 			string sjis;
 
-			//========================================
-			//= タイプ別変換処理
-			//========================================
-			bool kanji = (type == "N");
-			if (kanji)
-			{
-				//====================================
-				//= JEF漢字
-				//====================================
-				for (string::iterator i = ebc.begin(), e = ebc.end()
-					; i != e; ++i)
-				{
-					BYTE hi = (BYTE)*i;
-					BYTE lo = (BYTE)*(++i);
-					WORD jef = MAKEWORD(lo, hi);
-					WORD conv = ebcdic::jef::tosjis(jef);
-					sjis += (char)HIBYTE(conv);
-					sjis += (char)LOBYTE(conv);
-				}
-			}
-			else if (pack)
-			{
-				//====================================
-				//= パック項目
-				//====================================
-				for (string::iterator i = ebc.begin(), e = ebc.end()
-					; i != e; ++i)
-				{
-					//16進表記に変換
-					sjis += string::format("%02x", (uchar)(*i) & 0xff);
-				}
-			}
-			else 
-			{
-				//====================================
-				//= 半角英数 (PIC 9 or X)
-				//====================================
-				for (string::iterator i = ebc.begin(), e = ebc.end()
-					; i != e; ++i)
-				{
-					sjis += (char)ebcdic::tosjis((BYTE)(*i));
-				}
-			}
-
-			if (pack || sig)
-			{
-				//====================================
-				//= パック項目、符号付き項目
-				//====================================
-				//末尾1文字ポップ
-				string tail = sjis.pop(-1);
-				//パックの場合、桁数を調整
-				if (pack && (int)sjis.length() > (left + right))
-				{
-					sjis = sjis.substr(sjis.length() - (left + right));
-				}
-
-				if (pack)
-				{
-					//末尾の1文字で符号判定
-					if (tail == "D") sjis = "-" + sjis;
-				}
-				else 
-				{
-					//符号付き項目の判定
-					// A : +0   J : -0
-					// B : +1   K : -1
-					// C : +2   L : -2
-					//   ...      ...
-					// I : +9   R : -9
-					int def = tail[0] - 'A';
-					if (def > 10) sjis = "-" + sjis;
-					sjis += string::format("%d", def % 10);
-				}
-			}
-
-			if (right)
-			{
-				//====================================
-				//= 小数点
-				//====================================
-				string dec = sjis.pop(-right);
-				sjis += ".";
-				sjis += dec;
-			}
-
-
+			//EBCDIC => SJIS変換
+			field.translate(ebc, sjis);//★
 
 			//JSONに追記（キーと値）
 			os << json_escape(key.utf8()).double_quote();

@@ -35,6 +35,8 @@ struct fdg::field : public object
 	int		offset	;
 
 	field();
+	void translate(const string &ebc, string &sjis) const;
+	string translate(const string &ebc) const;
 };
 //====================================================
 //= struct fdg::fields
