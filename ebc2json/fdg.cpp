@@ -186,7 +186,7 @@ void fdg::fields::cobol(std::istream &is)
 			" +PIC +"
 			"(S?)(9|X|N)"	//タイプ
 			"\\(([0-9]+)\\)"	//桁数
-			"(V9\\(([0-9]+)\\))?"	//小数点以下桁数
+			"(V9\\(([0-9]+)\\)|V(9+))?"	//小数点以下桁数
 		")?"
 		"( +(PACKED\\-DECIMAL|COMP\\-3))?"	//パック
 		"( +OCCURS +([0-9]+))?"	//OCCURS
@@ -209,9 +209,32 @@ void fdg::fields::cobol(std::istream &is)
 			field.sig	= match[ 5].length();
 			field.type	= match[ 6];
 			field.left	= match[ 7].toint();
-			field.right	= match[ 9].toint();
+		//	field.right	= match[ 9].toint();
 			field.pack	= match[11].length();
 			field.occurs= match[13].toint();
+
+			//小数点以下
+			//'V9(NN)'パターンと'V99...'パターン
+			string right = match[8];
+			string nn = match[9];
+			if (right.find('(') != string::npos)
+			{
+				//'V99...パターン'
+				field.right = nn.length();
+			}
+			else if (right.find('V') == 0)
+			{
+				//なぜか[nn]に値が入らないので苦肉の策！★
+				// field.right = nn.length();
+				field.right = right.length() - 1;
+			}
+			else
+			{
+				//'V9(NN)'パターン
+				field.right = nn.toint();
+			}
+
+
 
 			field.key = field.name;
 
