@@ -1,12 +1,15 @@
 NAME = ebc2json
 BINDIR = ./bin
 OBJDIR = ./obj
-TARGET = $(BINDIR)/$(NAME).exe
+TARGET = $(BINDIR)/$(NAME).dll
+EXEOUT = $(BINDIR)/$(NAME).exe
+
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(addprefix $(OBJDIR)/,$(SOURCES:.cpp=.o))
 DEPENDS = $(OBJECTS:.o=.d)
 CXXFLAGS = -Wall -O3 -MMD -MP
-LDFLAGS = -static
+DLLLDFLAGS = -static -shared
+EXELDFLAGS = -static
 LIBS = -latd -lshlwapi -lregex
 
 CPPROOT = ..
@@ -16,9 +19,19 @@ LIBDIRS = \
 	-L $(CPPROOT)/atd.d/bin \
 	-L $(CPPROOT)/regex-2.7-bin/lib
 
-$(TARGET): $(OBJECTS) $(CPPROOT)/atd.d/bin/libatd.a
+IMPLIBS = \
+	$(CPPROOT)/atd.d/bin/libatd.a \
+
+$(TARGET): $(OBJECTS) $(IMPLIBS) $(EXEOUT)
 	@ [ -d $(BINDIR) ] | mkdir -p $(BINDIR)
-	$(CXX) $(LDFLAGS) $(LIBDIRS) -o $@ $(OBJECTS) $(LIBS)
+	$(CXX) $(DLLLDFLAGS) $(LIBDIRS) -o $@ $(OBJECTS) $(LIBS)
+	strip $@ --strip-all
+	#静的ライブラリ
+	ar rsv $(BINDIR)/lib$(NAME).a $^
+
+$(EXEOUT): $(OBJECTS) $(IMPLIBS)
+	@ [ -d $(BINDIR) ] | mkdir -p $(BINDIR)
+	$(CXX) $(EXELDFLAGS) $(LIBDIRS) -o $@ $(OBJECTS) $(LIBS)
 	strip $@ --strip-all
 
 $(OBJDIR)/%.o: %.cpp
