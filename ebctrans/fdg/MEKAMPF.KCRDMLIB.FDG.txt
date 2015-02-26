@@ -1,0 +1,21 @@
+
+
+          ASP      V24     FDG        V14-L02 (3720)  MEKAMPF                             13.11.06/09.16.10   PAGE-0001
+
+
+          COBOL  IMAGE  LIST     (NOTE: < > INDICATES PROGRAMMER DEFINED NAME)
+
+
+              DESCRIPTION OF FD (FILE DESCRIPTION) ENTRY
+
+                    FD <FILE-NAME> LABEL RECORD STANDARD.
+
+
+
+                    01  REC.
+                        02  TOKUNO               PIC 9(5).
+                        02  HATNO                PIC 9(5).
+                        02  FAXBIN               PIC 9(2).
+                        02  MEKANN               PIC 9(3)                       PACKED-DECIMAL.
+                        02  FAXNO                PIC X(15).
+                        02  FIL                  PIC X(21).

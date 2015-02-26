@@ -1,0 +1,84 @@
+
+
+          ASP      V24     FDG        V14-L02 (3720)  URIRUISF                            15.02.14/11.27.32   PAGE-0001
+
+
+          COBOL  IMAGE  LIST     (NOTE: < > INDICATES PROGRAMMER DEFINED NAME)
+
+
+              DESCRIPTION OF FD (FILE DESCRIPTION) ENTRY
+
+                    FD <FILE-NAME> LABEL RECORD STANDARD.
+
+
+
+                    01  R.
+                        02  SYOZOK               PIC 9(3).
+                        02  TOKUNO               PIC 9(5).
+                        02  KNRINO               PIC 9(6).
+                        02  KNRNOR               PIC 9(3).
+                        02  SYATEN               PIC X(6).
+                        02  SYOYMD               PIC 9(6)                       PACKED-DECIMAL.
+                        02  URIYMD               PIC 9(6).
+                        02  DENYMD               PIC 9(6)                       PACKED-DECIMAL.
+                        02  DENNO                PIC 9(6)                       PACKED-DECIMAL.
+                        02  GYONO                PIC 9(2).
+                        02  RETHU                PIC 9(2).
+                        02  BIN                  PIC 9(1).
+                        02  SHCDS                PIC 9(5).
+                        02  SHCDT                PIC X(8).
+                        02  SHNM1                PIC X(20).
+                        02  SHNM2                PIC X(20).
+                        02  DENSYU               PIC 9(2).
+                        02  DENKU                PIC X(2).
+                        02  MOTYMD               PIC 9(6)                       PACKED-DECIMAL.
+                        02  MOTDNO               PIC 9(6)                       PACKED-DECIMAL.
+                        02  AKARYU               PIC X(1).
+                        02  BUNRUI               PIC 9(4).
+                        02  URIKU                PIC 9(1).
+                        02  JTANI                PIC X(1).
+                        02  JIRISU               PIC 9(5)                       PACKED-DECIMAL.
+                        02  JKOSU                PIC 9(5)V9(2)                  PACKED-DECIMAL.
+                        02  JSURYO               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  JJYURY               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  JTANKA               PIC 9(7)V9(2)                  PACKED-DECIMAL.
+                        02  JKIN                 PIC S9(9)                      PACKED-DECIMAL.
+                        02  UTANI                PIC X(1).
+                        02  UIRISU               PIC 9(5)                       PACKED-DECIMAL.
+                        02  UKOSU                PIC 9(5)V9(2)                  PACKED-DECIMAL.
+                        02  USURYO               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  UJYURY               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  UTANKA               PIC 9(7)V9(2)                  PACKED-DECIMAL.
+                        02  UKIN                 PIC S9(9)                      PACKED-DECIMAL.
+                        02  BAIKA                PIC 9(7)                       PACKED-DECIMAL.
+                        02  STAN                 PIC 9(7)                       PACKED-DECIMAL.
+                        02  GBAIKA               PIC 9(7)                       PACKED-DECIMAL.
+                        02  KEITAI               PIC X(1).
+                        02  TOKUSC               PIC X(6).
+                        02  TANTO                PIC 9(5)                       PACKED-DECIMAL.
+                        02  HACHU                PIC 9(5)                       PACKED-DECIMAL.
+                        02  SHIREN               PIC 9(5)                       PACKED-DECIMAL.
+                        02  STANKA               PIC 9(7)V9(2)                  PACKED-DECIMAL.
+                        02  ZUIKNO               PIC 9(8)                       PACKED-DECIMAL.
+                        02  TOKECD               PIC 9(10)                      PACKED-DECIMAL.
+                        02  CNTNO                PIC 9(5).
+
+
+
+          ASP      V24     FDG        V14-L02 (3720)  URIRUISF                            15.02.14/11.27.32   PAGE-0002
+
+
+                        02  CNTGYO               PIC 9(2).
+                        02  SEIKYU               PIC 9(6)                       PACKED-DECIMAL.
+                        02  KAISYU               PIC 9(6)                       PACKED-DECIMAL.
+                        02  KAISYJ               PIC 9(1).
+                        02  FLG15                PIC X(5).
+                        02  IZBLNO               PIC X(1).
+                        02  IZBLNN               PIC 9(2).
+                        02  AKI.
+                         03  JANCD               PIC X(13).
+                         03  DMY                 PIC X(10).
+                         03  ZKMTAN              PIC 9(7)V9(2)                  PACKED-DECIMAL.
+                         03  ZKMKIN              PIC S9(9)                      PACKED-DECIMAL.
+                         03  TDENNO              PIC 9(10).
+                         03  BUTKBN              PIC X(1).

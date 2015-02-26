@@ -1,0 +1,95 @@
+
+
+          ASP      V24     FDG        V14-L02 (3720)  TMASAPF                             13.06.05/10.42.03   PAGE-0001
+
+
+          COBOL  IMAGE  LIST     (NOTE: < > INDICATES PROGRAMMER DEFINED NAME)
+
+
+              DESCRIPTION OF FD (FILE DESCRIPTION) ENTRY
+
+                    FD <FILE-NAME> LABEL RECORD STANDARD.
+
+
+
+                    01  R.
+                        02  TOKUCD               PIC 9(5).
+                        02  TNAMEN               PIC N(20).
+                        02  TNAMEK               PIC X(30).
+                        02  RYAKUN               PIC N(10).
+                        02  RYAKUK               PIC X(10).
+                        02  OYACD                PIC 9(5).
+                        02  KOCD                 PIC 9(5).
+                        02  SIMEA                                   OCCURS 10.
+                         03  SYOZOK              PIC 9(3).
+                         03  SIMEH1              PIC 9(2).
+                         03  HARIK1              PIC 9(1).
+                         03  HARIH1              PIC 9(2).
+                         03  SIMEH2              PIC 9(2).
+                         03  HARIK2              PIC 9(1).
+                         03  HARIH2              PIC 9(2).
+                         03  SIMEH3              PIC 9(2).
+                         03  HARIK3              PIC 9(1).
+                         03  HARIH3              PIC 9(2).
+                        02  DAIHYO               PIC N(10).
+                        02  DAIHYN               PIC X(20).
+                        02  YUBIN                PIC 9(7)                       PACKED-DECIMAL.
+                        02  DMY                  PIC X(2).
+                        02  TEL-NO               PIC X(15).
+                        02  ADRES1               PIC N(16).
+                        02  ADRES2               PIC N(16).
+                        02  ADREN1               PIC X(25).
+                        02  ADREN2               PIC X(25).
+                        02  SDIHYO               PIC N(10).
+                        02  SDIHYN               PIC X(20).
+                        02  SDIBIN               PIC 9(7)                       PACKED-DECIMAL.
+                        02  DMY1                 PIC X(2).
+                        02  STELNO               PIC X(15).
+                        02  SADRS1               PIC N(16).
+                        02  SADRS2               PIC N(16).
+                        02  SADRN1               PIC X(25).
+                        02  SADRN2               PIC X(25).
+                        02  STANTO               PIC N(10).
+                        02  STANTN               PIC X(20).
+                        02  BANKNO               PIC 9(4).
+                        02  BANKSY               PIC 9(3).
+                        02  BNKMEN               PIC N(20).
+                        02  BKSYMN               PIC N(20).
+                        02  BNKMEI               PIC X(15).
+                        02  BKSYME               PIC X(15).
+                        02  FURISY               PIC 9(1).
+                        02  HARAIJ               PIC 9(1).
+                        02  FURINO               PIC X(13).
+                        02  MEIGIN               PIC N(20).
+                        02  MEIGIK               PIC X(30).
+
+
+
+          ASP      V24     FDG        V14-L02 (3720)  TMASAPF                             13.06.05/10.42.03   PAGE-0002
+
+
+                        02  YOSIN                PIC 9(8)                       PACKED-DECIMAL.
+                        02  GYOSYU               PIC X(1).
+                        02  KANRI1               PIC X(1).
+                        02  SEIQ                 PIC X(1).
+                        02  SEIQTP               PIC X(1).
+                        02  AKASEQ               PIC X(1).
+                        02  SQKIH                PIC X(1).
+                        02  FAXNO                PIC X(15).
+                        02  TOHICD               PIC X(6).
+                        02  BUNKU                PIC X(1).
+                        02  AKI1                 PIC X(1).
+                        02  AKI2                 PIC X(1).
+                        02  AKI3                 PIC X(1).
+                        02  AKI4                 PIC X(1).
+                        02  AKI5                 PIC X(1).
+                        02  TOROKU               PIC 9(6)                       PACKED-DECIMAL.
+                        02  SYUSEI               PIC 9(6)                       PACKED-DECIMAL.
+                        02  SYUKEI               PIC 9(5).
+                        02  AKI                  PIC X(56).
+                        02  GZEIKU               PIC 9(1).
+                        02  GMIMN                PIC 9(1).
+                        02  GHSU                 PIC 9(1).
+                        02  BZEIKU               PIC 9(1).
+                        02  BHSU                 PIC 9(1).
+                        02  UHSU                 PIC 9(1).

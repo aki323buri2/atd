@@ -1,0 +1,22 @@
+
+
+          ASP      V24     FDG        V14-L02 (3720)  BUKAM                               14.06.06/15.13.19   PAGE-0001
+
+
+          COBOL  IMAGE  LIST     (NOTE: < > INDICATES PROGRAMMER DEFINED NAME)
+
+
+              DESCRIPTION OF FD (FILE DESCRIPTION) ENTRY
+
+                    FD <FILE-NAME> LABEL RECORD STANDARD.
+
+
+
+                    01  R.
+                        02  KEY.
+                         03  BUKNO               PIC 9(3).
+                        02  BUKMN                PIC N(10).
+                        02  BUKMX                PIC X(10).
+                        02  TOROKU               PIC 9(6)                       PACKED-DECIMAL.
+                        02  SYUSEI               PIC 9(6)                       PACKED-DECIMAL.
+                        02  AKI                  PIC X(59).

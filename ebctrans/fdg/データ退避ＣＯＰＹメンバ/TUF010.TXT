@@ -1,0 +1,56 @@
+000100******************************************************************
+000200*    îÑä|É}ÉXÉ^Å[Å@ÇgÇdÇ`Çc    (Ω≤¡÷∏ ºΩ√— : ≥ÿ∂π œΩ¿- HEAD)     *
+000300*    ÇsÇtÇeÇOÇPÇO   (TUF010)   91.06.01   RL=209    BF=112       *
+000400******************************************************************
+000500*  ä«óùNO   ïœçXì˙    çÏã∆é“   çÏã∆ì‡óe                          *
+000600*  NO.C082  01/05/26  OKUNO    ÉCÉgÅ[ÉàÅ[ÉJì∞êÍópêøãÅèëçÏê¨Ç…î∫Ç¢*
+000700*                              ìæà”êÊÇ≈ÇÃì`ï[ÇmÇnÇÉZÉbÉgÇ∑ÇÈÅB  *
+000800******************************************************************
+000900*
+001000 01  TURIMH-REC.
+001100     03  TUH-KISYCD              PIC  9(01).
+001200     03  TUH-TOKUCD              PIC  9(05).
+001300     03  TUH-SZKUCD              PIC  9(03).
+001400     03  TUH-URIDAT              PIC  9(06).
+001500     03  TUH-DENPNO              PIC  9(06).
+001600     03  TUH-TUIKNO              PIC  9(03).
+001700     03  TUH-MISECD              PIC  X(06).
+001800     03  TUH-DENDAT              PIC  9(06).
+001900     03  TUH-GYOUNO              PIC  9(02).
+002000     03  TUH-DENSYU              PIC  X(02).
+002100     03  TUH-DENKBN              PIC  X(02).
+002200     03  TUH-MURDAT              PIC  9(06).
+002300     03  TUH-MDENNO              PIC  9(06).
+002400     03  TUH-AKAKBN              PIC  X(01).
+002500     03  TUH-BUNRCD              PIC  9(04).
+002600     03  TUH-TANTOU              PIC  9(05).
+002700     03  TUH-SKYDAT              PIC  9(06).
+002800     03  TUH-URISRY              PIC S9(07)V9(02) PACKED-DECIMAL.
+002900     03  TUH-URIJRY              PIC S9(07)V9(02) PACKED-DECIMAL.
+003000     03  TUH-KNOCNT              PIC  9(06).
+003100     03  TUH-URIKIN              PIC S9(09)       PACKED-DECIMAL.
+003200     03  TUH-NKNKIN              PIC S9(09)       PACKED-DECIMAL.
+003300     03  TUH-JKNKIN              PIC S9(09)       PACKED-DECIMAL.
+003400     03  TUH-ZANKIN              PIC S9(09)       PACKED-DECIMAL.
+003500     03  TUH-UKEZAN              PIC S9(09)       PACKED-DECIMAL.
+003600     03  TUH-SYHIZI              PIC S9(09)       PACKED-DECIMAL.
+003700     03  TUH-SYHINK              PIC S9(09)       PACKED-DECIMAL.
+003800     03  TUH-SYHIJK              PIC S9(09)       PACKED-DECIMAL.
+003900     03  TUH-SYHIZN              PIC S9(09)       PACKED-DECIMAL.
+004000     03  TUH-KESDAT              PIC  9(06).
+004100     03  TUH-JYURNO              PIC  9(06).
+004200     03  TUH-SKYFLG              PIC  X(01).
+004300     03  TUH-SHKFLG              PIC  X(01).
+004400     03  TUH-KANFLG              PIC  X(01).
+004500**  NO.C082  01.05.26  S
+004600*    03  FILLER                  PIC  X(17).
+004700     03  TUH-TDENNO              PIC  9(10).
+004800     03  FILLER                  PIC  X(07).
+004900**  NO.C082  01.05.26  E
+005000     03  TUH-DTSDAT              PIC  9(06).
+005100     03  TUH-SYRDAT              PIC  9(06).
+005200     03  TUH-OPERNO              PIC  9(05).
+005300     03  FILLER                  PIC  X(20).
+005400     03  TUH-PGCSXX              PIC  X(08).
+005500     03  TUH-FILKBN              PIC  X(01).
+

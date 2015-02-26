@@ -1,0 +1,37 @@
+000100******************************************************************
+000200*    “ü‹àƒtƒ@ƒCƒ‹ ‚g‚d‚`‚c     (½²ÁÖ¸ ¼½ÃÑ : ÆÕ³·Ý Ì±²Ù HEAD)    *
+000300*    ‚s‚t‚e‚O‚R‚O   (TUF030)   91.06.01   RL=119    BF=197       *
+000400******************************************************************
+000500*
+000600 01  TNYUFH-REC.
+000700     03  TNH-KISYCD              PIC  9(01).
+000800     03  TNH-TOKUCD              PIC  9(05).
+000900     03  TNH-SZKUCD              PIC  9(03).
+001000     03  TNH-URIDAT              PIC  9(06).
+001100     03  TNH-DENPNO              PIC  9(06).
+001200     03  TNH-TUIKNO              PIC  9(03).
+001300     03  TNH-MISECD              PIC  X(06).
+001400     03  TNH-GYOUNO              PIC  9(02).
+001500     03  TNH-SAIXNO              PIC  9(02).
+001600     03  TNH-SYUMOK              PIC  X(01).
+001700     03  TNH-KUBUNX              PIC  X(01).
+001800     03  TNH-NKNKIN              PIC S9(09)       PACKED-DECIMAL.
+001900     03  TNH-UKEKIJ              PIC  9(06).
+002000     03  TNH-IKNFLG              PIC  X(01).
+002100     03  TNH-URIZAN              PIC S9(09)       PACKED-DECIMAL.
+002200     03  TNH-SYHIZN              PIC S9(09)       PACKED-DECIMAL.
+002300     03  TNH-SYHINK              PIC S9(09)       PACKED-DECIMAL.
+002400     03  TNH-SKYDAT              PIC  9(06).
+002500     03  TNH-SHKFLG              PIC  X(01).
+002600     03  TNH-GETKBN              PIC  X(01).
+002700     03  TNH-JKJFLG              PIC  X(01).
+002800     03  TNH-URIKIN              PIC S9(09)       PACKED-DECIMAL.
+002900     03  TNH-SYHIZI              PIC S9(09)       PACKED-DECIMAL.
+003000     03  TNH-HDPGCS              PIC  X(08).
+003010     03  TNH-DENDAT              PIC  9(06).
+003100     03  FILLER                  PIC  X(03).
+003200     03  TNH-SYRDAT              PIC  9(06).
+003300     03  TNH-OPERNO              PIC  9(05).
+003400     03  TNH-PGCSXX              PIC  X(08).
+003500     03  TNH-FILKBN              PIC  X(01).
+

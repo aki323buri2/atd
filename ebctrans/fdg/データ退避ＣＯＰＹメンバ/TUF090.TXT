@@ -1,0 +1,35 @@
+000100******************************************************************
+000200*    îÑä|É}ÉXÉ^Å[Å@ÇmÇxÇtÅ@    (Ω≤¡÷∏ ºΩ√— : ≥ÿ∂π œΩ¿- NYU)      *
+000300*    ÇsÇtÇeÇOÇXÇO   (TUF090)   91.06.01   RL=209    BF=112       *
+000400*  NO.F0166 04/03/28  YAMA     êÖíºÅ@è¡îÔê≈ëŒâû                  *
+000500******************************************************************
+000600*
+000700 01  TURIMN-REC.
+000800     03  TUN-KISYCD              PIC  9(01).
+000900     03  TUN-TOKUCD              PIC  9(05).
+001000     03  TUN-SZKUCD              PIC  9(03).
+001100     03  TUN-URIDAT              PIC  9(06).
+001200     03  TUN-DENPNO              PIC  9(06).
+001300     03  TUN-TUIKNO              PIC  9(03).
+001400     03  TUN-MISECD              PIC  X(06).
+001500     03  TUN-DENDAT              PIC  9(06).
+001600     03  TUN-GYOUNO              PIC  9(02).
+001700     03  TUN-SAIXNO              PIC  9(02).
+001800     03  TUN-SYUMOK              PIC  X(01).
+001900     03  TUN-KUBUNX              PIC  X(01).
+002000     03  TUN-KINGKX              PIC S9(09)       PACKED-DECIMAL.
+002100     03  TUN-UKEKIJ              PIC  9(06).
+002200     03  TUN-SOSFLG              PIC  X(01).
+002300**  NO.F0166 04/03/28  S
+002400**     03  FILLER                  PIC  X(09).
+002500*
+002600     03  TUN-SYKING              PIC S9(09)       PACKED-DECIMAL.
+002700     03  FILLER                  PIC  X(04).
+002800**  NO.F0166 04/03/28  E
+002900     03  TUN-DTSDAT              PIC  9(06).
+003000     03  TUN-SYRDAT              PIC  9(06).
+003100     03  TUN-OPERNO              PIC  9(05).
+003200     03  FILLER                  PIC  X(120).
+003300     03  TUN-PGCSXX              PIC  X(08).
+003400     03  TUN-FILKBN              PIC  X(01).
+

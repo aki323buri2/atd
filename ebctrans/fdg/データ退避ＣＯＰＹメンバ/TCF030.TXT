@@ -1,0 +1,53 @@
+000100******************************************************************
+000200*    ëóã‡ópÉfÅ[É^              (Ω≤¡÷∏ ºΩ√— : ø≥∑›÷≥ √ﬁ-¿)        *
+000300*    ÇsÇbÇeÇOÇRÇO   (TCF030)   91.06.01   RL=140    BF=2         *
+000400**                                                              **
+000500*  NO.9046  97/03/27  TANA      è¡îÔê≈ó¶ÇTÅìëŒâû                 *
+000600*  NO.D0262 02/06/20  MIYA      çÄñ⁄çƒíËã`                       *
+000700* NO.P0634 K.XXXX 14/03/31 HORI è¡îÔê≈ÇWÅìëŒâû                   *
+000800******************************************************************
+000900*
+001000 01  SOUKIN-REC.
+001100     03  SKN-KISYCD              PIC  9(01).
+001200     03  SKN-SZKUCD              PIC  9(03).
+001300     03  SKN-SISKCD              PIC  9(05).
+001400     03  SKN-SRKDAT              PIC  9(06).
+001500     03  SKN-SIHDAT              PIC  9(06).
+001600     03  SKN-SIHJOK              PIC  X(01).
+001700     03  SKN-DENPNO              PIC  9(06).
+001800     03  SKN-GYOUNO              PIC  9(02).
+001900     03  SKN-SIHKBN              PIC  X(01).
+002000** NO.D0262  02/06/20  S
+002100**** 03  SKN-SUSYNM              PIC  X(20).
+002200     03  SKN-SUSYNX.
+002300         05  SKN-SUSYNM          PIC  X(20).
+002400** NO.D0262  02/06/20  E
+002500     03  SKN-TEKIYO              PIC  X(20).
+002600     03  SKN-SUURYO              PIC S9(07)V9(02) PACKED-DECIMAL.
+002700     03  SKN-TANKAX              PIC  9(07)V9(02) PACKED-DECIMAL.
+002800     03  SKN-KINGKX              PIC S9(09)       PACKED-DECIMAL.
+002900     03  SKN-SYHIZI              PIC S9(09)       PACKED-DECIMAL.
+003000     03  SKN-TOKUCD              PIC  9(05).
+003100** NO.D0262  02/06/20  S
+003200****** 03  SKN-USEINO              PIC  X(14).
+003300****** 03  SKN-SIJDAT              PIC  9(06).
+003400****** 03  SKN-SYRDAT              PIC  9(06).
+003500****** 03  SKN-SDENNO              PIC  9(06).
+003600     03  SKN-NAIYOX.
+003700         05  SKN-USEINO          PIC  X(14).
+003800         05  SKN-SIJDAT          PIC  9(06).
+003900         05  SKN-SYRDAT          PIC  9(06).
+004000         05  SKN-SDENNO          PIC  9(06).
+004100** NO.D0262  02/06/20  E
+004200     03  SKN-SDENGY              PIC  9(02).
+004300     03  SKN-PGCSXX              PIC  X(08).
+004400** NO.9046  97/03/27  S
+004500****** 03  FILLER                  PIC  X(02).
+004600*
+004700     03  SKN-SYHFLG              PIC  9(01).
+004800** NO.P0634 K.XXXX 14/03/31  S
+004900**     03  FILLER                  PIC  X(01).
+005000     03  SKN-RITKBN              PIC  X(01).
+005100** NO.P0634 K.XXXX 14/03/31  E
+005200** NO.9046  97/03/27  E
+

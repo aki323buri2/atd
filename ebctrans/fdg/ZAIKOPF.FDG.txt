@@ -1,0 +1,89 @@
+
+
+          ASP      V24     FDG        V14-L02 (3720)  ZAIKOPF                             13.06.06/11.45.31   PAGE-0001
+
+
+          COBOL  IMAGE  LIST     (NOTE: < > INDICATES PROGRAMMER DEFINED NAME)
+
+
+              DESCRIPTION OF FD (FILE DESCRIPTION) ENTRY
+
+                    FD <FILE-NAME> LABEL RECORD STANDARD.
+
+
+
+                    01  R.
+                        02  KEY.
+                         03  SYOZOK              PIC 9(3).
+                         03  SHCDS               PIC 9(5).
+                         03  ZAIKON              PIC 9(8).
+                         03  SAINYU              PIC 9(8).
+                        02  TOKECD               PIC 9(10)                      PACKED-DECIMAL.
+                        02  NKURAN               PIC 9(3).
+                        02  NKURAK               PIC X(1).
+                        02  NYUKOB               PIC 9(6).
+                        02  SYOKEN               PIC X(10).
+                        02  MTKOSU               PIC 9(5)V9(2)                  PACKED-DECIMAL.
+                        02  SHNMS                PIC X(20).
+                        02  TEKIYO               PIC X(20).
+                        02  KIRIME               PIC S9(5)V9(2)                 PACKED-DECIMAL.
+                        02  KAWASE               PIC 9(5)                       PACKED-DECIMAL.
+                        02  KNTANI               PIC X(1).
+                        02  KNSURY               PIC 9(5)V9(2)                  PACKED-DECIMAL.
+                        02  KNJYUR               PIC 9(5)V9(2)                  PACKED-DECIMAL.
+                        02  KNTANK               PIC 9(7)V9(2)                  PACKED-DECIMAL.
+                        02  ZENMKK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  ZENMZN               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  ZENMGY               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SKORUI               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUSUR               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUGYR               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUKOK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUSUK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUGYK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUKOG               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUSUG               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  SYUGYG               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  KZAIKH               PIC 9(6)                       PACKED-DECIMAL.
+                        02  BZENKO               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BZENSU               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BZENGY               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BKORUI               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYUSU               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYUGY               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYKOK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYSUK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYGYK               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYKOG               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYSUG               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BSYGYG               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  BZAIKH               PIC 9(6)                       PACKED-DECIMAL.
+                        02  SYORIH               PIC 9(6)                       PACKED-DECIMAL.
+                        02  KISANB               PIC 9(6)                       PACKED-DECIMAL.
+                        02  SHIREN               PIC 9(5)                       PACKED-DECIMAL.
+                        02  SYOYUK               PIC X(1).
+
+
+
+          ASP      V24     FDG        V14-L02 (3720)  ZAIKOPF                             13.06.06/11.45.31   PAGE-0002
+
+
+                        02  HINKEI               PIC X(1).
+                        02  BUTUSU               PIC S9(7)V9(2)                 PACKED-DECIMAL.
+                        02  KURATN               PIC S9(7)                      PACKED-DECIMAL.
+                        02  KURAKN               PIC S9(9)                      PACKED-DECIMAL.
+                        02  ZUIGNO               PIC 9(8)                       PACKED-DECIMAL.
+                        02  RINGIN               PIC 9(6)                       PACKED-DECIMAL.
+                        02  KANHI                PIC 9(6)                       PACKED-DECIMAL.
+                        02  FLG1                 PIC X(1).
+                        02  FLG2                 PIC X(1).
+                        02  FLG3                 PIC X(1).
+                        02  FLG4                 PIC X(1).
+                        02  FLG5                 PIC X(1).
+                        02  ZHASEI.
+                         03  HASEI               PIC 9(2).
+                         03  HSKU                PIC 9(1).
+                        02  TANTO                PIC 9(5)                       PACKED-DECIMAL.
+                        02  ZCHOSE               PIC S9(5)                      PACKED-DECIMAL.
+                        02  SYOCNT               PIC 9(3).
+                        02  AKI                  PIC X(33).

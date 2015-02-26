@@ -1,0 +1,91 @@
+000100******************************************************************
+000200*    ìæà”êÊÉ}ÉXÉ^              (Ω≤¡÷∏ ºΩ√— : ƒ∏≤ª∑ œΩ¿)          *
+000300*    ÇsÇwÇeÇOÇPÇO   (TXF010)   91.06.18   RL=1008   BF=23        *
+000400*  NO.9333  97/12/09  TANA      óXï÷î‘çÜÇVåÖëŒâû                 *
+000500*  NO.F0166 04/03/28  KAWAI     êÖíºÅ@è¡îÔê≈ëŒâû                 *
+000600******************************************************************
+000700*
+000800 01  TTOKUM-REC.
+000900     03  TTK-KISYCD              PIC  9(01).
+001000     03  TTK-TOKUCD              PIC  9(05).
+001100     03  TTK-TOKUNN              PIC  N(20).
+001200     03  TTK-TOKUNM              PIC  X(30).
+001300     03  TTK-TOKURN              PIC  N(10).
+001400     03  TTK-TOKURY              PIC  X(10).
+001500     03  TTK-OYAXCD              PIC  9(05).
+001600     03  TTK-KOXXCD              PIC  9(05).
+001700     03  TTK-DAIHNN              PIC  N(10).
+001800     03  TTK-DAIHNM              PIC  X(20).
+001900     03  TTK-YUBNNO              PIC  X(06).
+002000     03  TTK-JUSY1N              PIC  N(16).
+002100     03  TTK-JUSY2N              PIC  N(16).
+002200     03  TTK-JUSY1K              PIC  X(25).
+002300     03  TTK-JUSY2K              PIC  X(25).
+002400     03  TTK-TELXNO              PIC  X(15).
+002500     03  TTK-FAXXNO              PIC  X(15).
+002600     03  TTK-AITECD              PIC  X(06).
+002700     03  TTK-SEDAIN              PIC  N(10).
+002800     03  TTK-SEDAIK              PIC  X(20).
+002900     03  TTK-SEYUBN              PIC  X(06).
+003000     03  TTK-SETELX              PIC  X(15).
+003100     03  TTK-SEJU1N              PIC  N(16).
+003200     03  TTK-SEJU2N              PIC  N(16).
+003300     03  TTK-SEJU1K              PIC  X(25).
+003400     03  TTK-SEJU2K              PIC  X(25).
+003500     03  TTK-SEKTAN              PIC  N(10).
+003600     03  TTK-SEKTAK              PIC  X(20).
+003700     03  TTK-BANKCD              PIC  9(04).
+003800     03  TTK-BANSCD              PIC  9(03).
+003900     03  TTK-BANKNN              PIC  N(20).
+004000     03  TTK-BANKSN              PIC  N(20).
+004100     03  TTK-BANKNM              PIC  X(15).
+004200     03  TTK-BANKSK              PIC  X(15).
+004300     03  TTK-YOKNSY              PIC  X(01).
+004400     03  TTK-SIHJOK              PIC  X(01).
+004500     03  TTK-KOZANO              PIC  X(13).
+004600     03  TTK-KOZANN              PIC  N(20).
+004700     03  TTK-KOZANM              PIC  X(30).
+004800     03  TTK-GYOSYU              PIC  X(01).
+004900     03  TTK-KNRTNI              PIC  X(01).
+005000     03  TTK-SKYHOU              PIC  X(01).
+005100     03  TTK-SKYYOU              PIC  X(01).
+005200     03  TTK-AKAKBN              PIC  X(01).
+005300     03  TTK-SKNKBN              PIC  X(01).
+005400     03  TTK-BUNKBN              PIC  X(01).
+005500     03  TTK-SYUKCD              PIC  9(05).
+005600     03  TTK-SHKFLG              PIC  X(01).
+005700     03  TTK-KAZFLG              PIC  X(01).
+005800     03  TTK-SZKTBL              OCCURS  12.
+005900       05  TTK-SZKUCD            PIC  9(03).
+006000       05  TTK-YOGEND            PIC  9(09)       PACKED-DECIMAL.
+006100       05  TTK-SIMDAT            PIC  9(02).
+006200       05  TTK-SIHKBN            PIC  X(01).
+006300       05  TTK-SIHDAT            PIC  9(02).
+006400       05  TTK-SEIDAT            PIC  9(02).
+006500**  NO.F0166 04/03/28  S
+006600**     03  FILLER                  PIC  X(30).
+006700*
+006800     03  TTK-ZEIKBN              PIC  9(01).
+006900     03  TTK-MIMNKT              PIC  9(01).
+007000     03  TTK-HASUSY              PIC  9(01).
+007100     03  TTK-KGHASU              PIC  9(01).
+007200     03  FILLER                  PIC  X(26).
+007300**  NO.F0166 04/03/28  E
+007400     03  TTK-EIJKBN              PIC  X(01).
+007500     03  TTK-SYORLB              PIC  X(01).
+007600     03  TTK-PASSWD              PIC  X(04).
+007700     03  TTK-SIYJSK              PIC  X(05).
+007800     03  TTK-TRODAT              PIC  9(06).
+007900**  NO.9333  97/12/09  S
+008000**     03  FILLER                  PIC  X(19).
+008100*
+008200     03  TTK-KHKYFG              PIC  9(01).
+008300     03  TTK-RNHSFG              PIC  9(01).
+008400     03  TTK-YUUBIN              PIC  X(08).
+008500     03  TTK-SEYUUB              PIC  X(08).
+008600     03  FILLER                  PIC  X(01).
+008700**  NO.9333  97/12/09  E
+008800     03  TTK-SYUDAT              PIC  9(06).
+008900     03  TTK-OPERNO              PIC  9(05).
+009000     03  TTK-PGCSXX              PIC  X(08).
+

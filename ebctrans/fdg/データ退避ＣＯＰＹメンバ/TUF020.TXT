@@ -1,0 +1,62 @@
+000100******************************************************************
+000200*    îÑä|É}ÉXÉ^Å[Å@ÇaÇnÇcÇx    (Ω≤¡÷∏ ºΩ√— : ≥ÿ∂π œΩ¿- BODY)     *
+000300*    ÇsÇtÇeÇOÇQÇO   (TUF020)   91.06.01   RL=209    BF=112       *
+000400******************************************************************
+000500*  ä«óùNO   ïœçXì˙    çÏã∆é“   çÏã∆ì‡óe                          *
+000600*  NO.C082  01/05/26  OKUNO    ÉCÉgÅ[ÉàÅ[ÉJì∞êÍópêøãÅèëçÏê¨Ç…î∫Ç¢*
+000700*                              ìæà”êÊÇ≈ÇÃì`ï[ÇmÇnÇÉZÉbÉgÇ∑ÇÈÅB  *
+000800*  NO.F0166 04/03/28  YAMA     êÖíºÅ@è¡îÔê≈ëŒâû                  *
+000900******************************************************************
+001000*
+001100 01  TURIMB-REC.
+001200     03  TUB-KISYCD              PIC  9(01).
+001300     03  TUB-TOKUCD              PIC  9(05).
+001400     03  TUB-SZKUCD              PIC  9(03).
+001500     03  TUB-URIDAT              PIC  9(06).
+001600     03  TUB-DENPNO              PIC  9(06).
+001700     03  TUB-TUIKNO              PIC  9(03).
+001800     03  TUB-MISECD              PIC  X(06).
+001900     03  TUB-DENDAT              PIC  9(06).
+002000     03  TUB-GYOUNO              PIC  9(02).
+002100     03  TUB-URIKIN              PIC S9(09)       PACKED-DECIMAL.
+002200     03  TUB-NKRKIN              PIC S9(09)       PACKED-DECIMAL.
+002300     03  TUB-JKNJZN              PIC S9(09)       PACKED-DECIMAL.
+002400     03  TUB-ZANKIN              PIC S9(09)       PACKED-DECIMAL.
+002500     03  TUB-UKEZAN              PIC S9(09)       PACKED-DECIMAL.
+002600     03  TUB-KANFLG              PIC  X(01).
+002700     03  TUB-JYURNO              PIC  9(06).
+002800     03  TUB-SKYFLG              PIC  X(01).
+002900     03  TUB-SHKFLG              PIC  X(01).
+003000     03  TUB-KESDAT              PIC  9(06).
+003100     03  TUB-SUSYCD              PIC  9(05).
+003200     03  TUB-TOSYCD              PIC  X(08).
+003300     03  TUB-SYHNK1              PIC  X(20).
+003400     03  TUB-SYHNK2              PIC  X(20).
+003500     03  TUB-URIKBN              PIC  X(01).
+003600     03  TUB-URITNI              PIC  X(01).
+003700     03  TUB-URIIRS              PIC  9(05)       PACKED-DECIMAL.
+003800     03  TUB-URIKOS              PIC  9(05)V9(02) PACKED-DECIMAL.
+003900     03  TUB-URISRY              PIC S9(07)V9(02) PACKED-DECIMAL.
+004000     03  TUB-URIJRY              PIC S9(07)V9(02) PACKED-DECIMAL.
+004100     03  TUB-URITAN              PIC  9(07)V9(02) PACKED-DECIMAL.
+004200**  NO.F0166 04/03/28  S
+004300**     03  TUB-COMENT              PIC  X(20).
+004400****  NO.C082  01.05.26  S
+004500***    03  FILLER                  PIC  X(14).
+004600**     03  TUB-TDENNO              PIC  9(10).
+004700**     03  FILLER                  PIC  X(04).
+004800****  NO.C082  01.05.26  E
+004900**     03  TUB-SYRDAT              PIC  9(06).
+005000**     03  TUB-OPERNO              PIC  9(05).
+005100*
+005200     03  TUB-COMENT              PIC  X(15).
+005300     03  TUB-SYHIZI              PIC S9(09)       PACKED-DECIMAL.
+005400     03  TUB-TDENNO              PIC  9(10)       PACKED-DECIMAL.
+005500     03  TUB-SYHIZN              PIC S9(09)       PACKED-DECIMAL.
+005600     03  TUB-SYRKIN              PIC S9(09)       PACKED-DECIMAL.
+005700     03  TUB-SYRDAT              PIC  9(06)       PACKED-DECIMAL.
+005800     03  TUB-ZKMTAN              PIC  9(07)V99    PACKED-DECIMAL.
+005900**  NO.F0166 04/03/28  E
+006000     03  TUB-PGCSXX              PIC  X(08).
+006100     03  TUB-FILKBN              PIC  X(01).
+

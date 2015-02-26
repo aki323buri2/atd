@@ -1,0 +1,57 @@
+000100******************************************************************
+000200*    îÉä|É}ÉXÉ^Å[Å@ÇaÇnÇcÇx    (Ω≤¡÷∏ ºΩ√— : ∂≤∂π œΩ¿- BODY)     *
+000300*    ÇsÇbÇeÇOÇPÇO   (TCF010)   91.06.01   RL=249    BF=94        *
+000400******************************************************************
+000500*
+000600 01  TKAIKB-REC.
+000700     03  TKB-KISYCD              PIC  9(01).
+000800     03  TKB-SISKCD              PIC  9(05).
+000900     03  TKB-SZKUCD              PIC  9(03).
+001000     03  TKB-DENPNO              PIC  9(06).
+001100     03  TKB-GYOUNO              PIC  9(02).
+001300     03  TKB-SRKDAT              PIC  9(06).
+001500     03  TKB-DENDAT              PIC  9(06).
+001510     03  TKB-TOKUCD              PIC  9(05).
+001520     03  TKB-AKAKBN              PIC  X(01).
+002100     03  TKB-AKACOM              PIC  X(20).
+002200     03  TKB-SUSYCD              PIC  9(05).
+002300     03  TKB-SUSYNM              PIC  X(20).
+002400     03  TKB-KNOCNT              PIC  9(06).
+002600     03  TKB-SISKBN              PIC  X(02).
+002700     03  TKB-ZKOKNO              PIC  9(08).
+003300     03  TKB-SIHDAT              PIC  9(06).
+003400     03  TKB-SIHJOK              PIC  X(01).
+003500     03  TKB-TANTOU              PIC  9(05).
+003600     03  TKB-TANIXX              PIC  X(01).
+003700     03  TKB-IRIMKT              PIC  9(05)V9(02) PACKED-DECIMAL.
+003800     03  TKB-AWASEX              PIC  9(05)       PACKED-DECIMAL.
+003900     03  TKB-KOSUUX              PIC  9(05)V9(02) PACKED-DECIMAL.
+004000     03  TKB-SUURYO              PIC S9(07)V9(02) PACKED-DECIMAL.
+004100     03  TKB-JYURYO              PIC S9(07)V9(02) PACKED-DECIMAL.
+004200     03  TKB-TANKAX              PIC  9(07)V9(02) PACKED-DECIMAL.
+004300     03  TKB-KINGKX              PIC S9(09)       PACKED-DECIMAL.
+004400     03  TKB-SIHKEI              PIC S9(09)       PACKED-DECIMAL.
+004500     03  TKB-ZANKIN              PIC S9(09)       PACKED-DECIMAL.
+004600     03  TKB-SIHFLG              PIC  X(01).
+004700     03  TKB-KANFLG              PIC  X(01).
+004900     03  TKB-SDENNO              PIC  9(06).
+005000     03  TKB-SDENGY              PIC  9(02).
+005100     03  TKB-KNRTNI              PIC  X(01).
+005110     03  TKB-RNGFLG              PIC  X(01).
+005120     03  TKB-RINGNO              PIC  9(06).
+005400     03  TKB-TEIKNO              PIC  9(08).
+005700     03  TKB-KESFLG              PIC  X(01).
+005800     03  TKB-USEINO              PIC  X(14).
+005900     03  TKB-STEKIJ              PIC  9(06).
+006100     03  TKB-SYHIZI              PIC S9(09)       PACKED-DECIMAL.
+006200     03  TKB-KZIFLG              PIC  X(01).
+006300     03  TKB-SYNKBN              PIC  X(01).
+006400     03  TKB-KESDAT              PIC  9(06).
+006410     03  TKB-SDTFLG              PIC  X(01).
+006500     03  FILLER                  PIC  X(12).
+006600     03  TKB-DTSDAT              PIC  9(06).
+006700     03  TKB-SYRDAT              PIC  9(06).
+006800     03  TKB-OPERNO              PIC  9(05).
+006900     03  TKB-PGCSXX              PIC  X(08).
+007000     03  TKB-FILKBN              PIC  X(01).
+

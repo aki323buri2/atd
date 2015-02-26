@@ -1,0 +1,30 @@
+000100******************************************************************
+000200*    îÉä|É}ÉXÉ^Å[Å@ÇjÇdÇrÅ@    (Ω≤¡÷∏ ºΩ√— : ∂≤∂π œΩ¿- KES)      *
+000300*    ÇsÇbÇeÇOÇSÇO   (TCF040)   91.06.01   RL=249    BF=94        *
+000400******************************************************************
+000500*
+000600 01  TKAIKK-REC.
+000700     03  TKK-KISYCD              PIC  9(01).
+000800     03  TKK-SISKCD              PIC  9(05).
+000900     03  TKK-SZKUCD              PIC  9(03).
+001000     03  TKK-DENPNO              PIC  9(06).
+001100     03  TKK-GYOUNO              PIC  9(02).
+001300     03  TKK-SRKDAT              PIC  9(06).
+001500     03  TKK-DENDAT              PIC  9(06).
+003300     03  TKK-SIHDAT              PIC  9(06).
+003400     03  TKK-SIHJOK              PIC  X(01).
+004300     03  TKK-KINGKX              PIC S9(09)       PACKED-DECIMAL.
+006100     03  TKK-SYHIZI              PIC S9(09)       PACKED-DECIMAL.
+006110     03  TKK-SIJDAT              PIC  9(06).
+006120     03  TKK-STEKIJ              PIC  9(06).
+006130     03  TKK-KESDAT              PIC  9(06).
+006140     03  TKK-KANFLG              PIC  X(01).
+006150     03  TKK-SKNFLG              PIC  X(01).
+006500     03  FILLER                  PIC  X(17).
+006600     03  TKK-DTSDAT              PIC  9(06).
+006700     03  TKK-SYRDAT              PIC  9(06).
+006800     03  TKK-OPERNO              PIC  9(05).
+006810     03  FILLER                  PIC  X(140).
+006900     03  TKK-PGCSXX              PIC  X(08).
+007000     03  TKK-FILKBN              PIC  X(01).
+
