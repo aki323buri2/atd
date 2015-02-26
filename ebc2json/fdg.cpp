@@ -179,7 +179,8 @@ void fdg::fields::cobol(std::istream &is)
 {
 	//正規表現（COBOL PICTURE句）
 	string pattern = 
-		"^ *([0-9]{2})"	//LV
+		"^([0-9]{6})?"	//行番号
+		" *([0-9]{2})"	//LV
 		" +([^ ]+)"	//識別名
 		"("
 			" +PIC +"
@@ -203,14 +204,14 @@ void fdg::fields::cobol(std::istream &is)
 		if (success)
 		{
 			struct field field;
-			field.lv	= match[ 1].toint();
-			field.name	= match[ 2];
-			field.sig	= match[ 4].length();
-			field.type	= match[ 5];
-			field.left	= match[ 6].toint();
-			field.right	= match[ 8].toint();
-			field.pack	= match[10].length();
-			field.occurs= match[12].toint();
+			field.lv	= match[ 2].toint();
+			field.name	= match[ 3];
+			field.sig	= match[ 5].length();
+			field.type	= match[ 6];
+			field.left	= match[ 7].toint();
+			field.right	= match[ 9].toint();
+			field.pack	= match[11].length();
+			field.occurs= match[13].toint();
 
 			field.key = field.name;
 
