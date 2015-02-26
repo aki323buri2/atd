@@ -20,19 +20,19 @@ struct fdg
 //====================================================
 struct fdg::field : public object
 {
-	int		lv		;
-	string	name	;
-	bool	sig		;
-	string	type	;
-	int		left	;
-	int		right	;
-	bool	pack	;
-	int		occurs	;
+	int		lv		;//レベル番号
+	string	name	;//名称
+	bool	sig		;//符号付き
+	string	type	;//データタイプ
+	int		left	;//整数部バイト数
+	int		right	;//小数部バイト数
+	bool	pack	;//バック項目？
+	int		occurs	;//OCCURS（繰り返し）数
 
 	string	key		;
-	int		sub		;
-	int		real	;
-	int		offset	;
+	int		sub		;//OCCURSインデックス
+	int		real	;//実バイト数
+	int		offset	;//レコード内オフセット
 
 	field();
 	void translate(const string &ebc, string &sjis) const;

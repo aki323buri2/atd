@@ -243,7 +243,7 @@ fdg::navigater::const_iterator fdg::navigater::import(
 	, int &offset
 	, const_iterator begin
 	, const_iterator end
-	, int sub
+	, int sub//OCCURSインデックス
 	)
 {
 	const struct field &field = *begin;
@@ -263,6 +263,7 @@ fdg::navigater::const_iterator fdg::navigater::import(
 		//集団項目ならば再帰ループ
 		++begin;
 		const_iterator i;
+		//OCCURS
 		for (int o = 0; o < occurs; o++)
 		{
 			for (i = begin; i != end && i->lv > lv; )
@@ -287,6 +288,7 @@ fdg::navigater::const_iterator fdg::navigater::import(
 		//パック項目
 		real = (real/2) + 1;
 	}
+	//OCCURS
 	for (int o = 0; o < occurs; o++)
 	{
 		add.offset = offset;
