@@ -27,6 +27,35 @@ string path::filename(const string &path)
 {
 	return remove_extension(basename(path));
 }
+int64 path::filesize(const string &path)
+{
+	struct file
+	{
+		HANDLE handle;
+		file(const string &path)
+		: handle(0)
+		{
+			handle = ::CreateFile(path.c_str()
+				, GENERIC_READ
+				, FILE_SHARE_READ
+				, NULL
+				, OPEN_EXISTING
+				, FILE_ATTRIBUTE_NORMAL
+				, NULL
+			);
+		}
+		~file()
+		{
+			if (handle != INVALID_HANDLE_VALUE)
+			{
+				::CloseHandle(handle);
+			}
+		}
+	};
+	LARGE_INTEGER size = {0};
+	::GetFileSizeEx(file(path).handle, &size);
+	return size.QuadPart;
+}
 string path::add_backslash(const string &path)
 {
 	string s(MAX_PATH + 1, 0); 
