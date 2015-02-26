@@ -247,6 +247,9 @@ fdg::navigater::const_iterator fdg::navigater::import(
 	, int sub//OCCURSインデックス
 	)
 {
+	//インポート対象が空の場合に対応
+	if (begin == end) return end;
+
 	const struct field &field = *begin;
 	int		lv		= field.lv		;
 	string	name	= field.name	;
@@ -313,9 +316,17 @@ fdg::navigater::const_iterator fdg::navigater::import(
 void fdg::navigater::demo(const generic::notify &notify) const 
 {
 	generic::notifyf notifyf = notify;
+
+	//空の場合に対応
+	if (size() == 0)
+	{
+		notify("fdg::navigater::demo() - 登録なし -");
+		return;
+	}
+	//デモ開始
 	for (const_iterator i = begin(), e = end(); i != e; ++i)
 	{
-	const struct field &field = *i;
+		const struct field &field = *i;
 		int		lv		= field.lv		;
 		string	name	= field.name	;
 		bool	sig		= field.sig		;
