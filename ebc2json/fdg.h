@@ -44,6 +44,7 @@ struct fdg::field : public object
 struct fdg::fields : public object, public std::vector<field>
 {
 	int offset;
+
 	fields();
 	fields &operator << (const string &cobol);
 	void cobol(const string &cobol);

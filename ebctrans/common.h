@@ -16,7 +16,7 @@ static struct app
 		dirname = path::dirname(path);
 		basename = path::basename(path);
 		filename = path::filename(path);
-		log = path::rename_extension(filename, ".log");
+		log = path::rename_extension(path, ".log");
 	}
 	static string now()
 	{
@@ -27,7 +27,7 @@ static struct app
 static void notify(const string &s)
 {
 	string sjis = s.sjis();
-	std::ofstream ofs(app.log.sjis().c_str());
+	std::ofstream ofs(app.log.sjis().c_str(), std::ios::app);
 	ofs << "[" << app::now() << "] ";
 	ofs << sjis << endl;
 	cout << sjis << endl;

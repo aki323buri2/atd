@@ -1,8 +1,8 @@
 # wizard.py
 import sys
 import os
-release = True
 release = False
+release = True
 def make(filename, s):
 	if release and os.path.isfile(filename):
 		return
