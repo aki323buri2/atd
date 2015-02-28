@@ -145,6 +145,15 @@ int run(int argc, char **argv)
 	cout << endl;
 	ifs.close();
 
+	//分割ファイルを一旦クローズ
+	for (navmap::iterator i = map.begin(), e = map.end()
+		; i != e; ++i)
+	{
+		i->second.ofs->close();
+	}
+
+
+
 	for (navmap::iterator i = map.begin(), e = map.end()
 		; i != e; ++i)
 	{

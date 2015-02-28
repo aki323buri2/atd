@@ -107,6 +107,9 @@ struct navitem
 	fdg::navigater *nav;
 	int count;
 	std::ofstream *ofs;
+	threading::thread *thread;
+	threading::event *event;
+
 	navitem(
 		  const string &name = ""
 		, fdg::navigater *nav = 0
@@ -115,6 +118,8 @@ struct navitem
 	, nav(nav)
 	, count(0)
 	, ofs(0)
+	, thread(0)
+	, event(0)
 	{
 	}
 };
@@ -140,6 +145,8 @@ struct navmap : public std::map<uchar, navitem>
 		for (iterator i = begin(), e = end(); i != e; ++i)
 		{
 			delete i->second.ofs;
+			delete i->second.thread;
+			delete i->second.event;
 		}
 	}
 
