@@ -78,10 +78,10 @@ int run(int argc, char **argv)
 		if (nav.rsize > rsize) rsize = nav.rsize;
 	}
 	
-	
 	if (!rsize) throw generic::exception("record size is zero!");
 
-	cout << rsize << endl;
+	//出力フォルダ
+	string outd = path::make_sure_directory(path::app_path("output.d"));
 
 	//データレコード数算出
 	int64 fsize	= path::filesize(ebc.path.sjis());
@@ -89,60 +89,52 @@ int run(int argc, char **argv)
 	cout << rows << endl;
 	if (!rows) throw generic::exception("record count is zero!");
 
+
+
 	//進捗
 	int blocks = 40;
 	int64 step = (rows + 1) / blocks;
 
-	//map
-	struct navmap : public std::map<uchar, fdg::navigater *>
-	{
-		fdg::navigater *navof(uchar key) const
-		{
-			const_iterator i = find(key);
-			return i == end() ? 0 : i->second;
-		}
-		void addnav(uchar key, fdg::navigater *nav)
-		{
-			insert(value_type(key, nav));
-		}
-	};
+	//navigater map　
 	navmap map;
-	map.addnav('1', &navs[0]);
-	map.addnav('2', &navs[1]);
-	map.addnav('3', &navs[2]);
+	map.addnav('1', "TUF010", &navs[0]);
+	map.addnav('2', "TUF020", &navs[1]);
+	map.addnav('3', "TUF090", &navs[2]);
 
+	//ファイルオープン
 	std::ifstream ifs(ebc.path.sjis().c_str(), std::ios::binary);
 	string buf(rsize, 0);
+
+	for (navmap::iterator i = map.begin(), e = map.end()
+		; i != e; ++i)
+	{
+		navitem &item = i->second;
+		string name = item.name;
+		string path = path::combine(outd, name);
+		//ファイルクリア
+		{
+			std::ofstream ofs(path.sjis().c_str(), std::ios::out);
+		}
+		//ファイルオープン（追記＆バイナリ）
+		item.ofs = new std::ofstream(path.sjis().c_str()
+			, std::ios::app 
+			| std::ios::binary
+		);
+	}
 
 	for (int64 i = 0; i < rows; i++)
 	{
 		::memset(&buf[0], 0, buf.size());
 		ifs.read(&buf[0], buf.size());
 
+		//末尾１バイトでFDG判定
 		uchar rid = *(buf.rbegin());
 		rid = ebcdic::tosjis(rid);
-		
-		fdg::navigater *nav = map.navof(rid);
+		navitem &nav = map.navof(rid);
 
-
-		generic::property::vector conv;
-		int offset = 0;
-		string ebc(0x100, 0);
-		string sjis;
-		string utf8;
-		for (fdg::fields::iterator i = nav->begin(), e = nav->end()
-			; i != e; ++i)
-		{
-			fdg::field &field = *i;
-			string &name = field.name;
-			int real = field.real;
-			ebc.resize(real, 0);
-			::memcpy(&ebc[0], &buf[offset], real);
-			sjis = field.translate(ebc);
-			utf8 = sjis.utf8();
-			
-			offset += real;
-		}
+		//分割ファイルに書き込み
+		nav.ofs->write(&buf[0], buf.size());
+		nav.count++;
 
 		//progress
 		if ((i % step) == 0)
@@ -152,6 +144,14 @@ int run(int argc, char **argv)
 	}
 	cout << endl;
 	ifs.close();
+
+	for (navmap::iterator i = map.begin(), e = map.end()
+		; i != e; ++i)
+	{
+		uchar rid = i->first;
+		navitem nav = i->second;
+		cout << rid << " : " << nav.count << endl;
+	}
 
 	
 

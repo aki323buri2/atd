@@ -52,4 +52,147 @@ struct properties : public generic::property::list
 		}
 	}
 };
+
+//====================================================
+//=　threading
+//====================================================
+#include <process.h>
+struct threading
+{
+	struct object;
+	struct event;
+	struct thread;
+};
+//====================================================
+//=　threading::object
+//====================================================
+struct threading::object : public atd::object
+{
+	HANDLE handle;
+	object(HANDLE handle = 0);
+	DWORD wait(DWORD milliseconds = INFINITE);
+};
+//====================================================
+//=　threading::event
+//====================================================
+struct threading::event : public threading::object
+{
+	event();
+	void set();
+	void reset();
+};
+//====================================================
+//=　threading::thread
+//====================================================
+struct threading::thread : public threading::object
+{
+	typedef generic::function<void, void> action;
+	action callback;
+	unsigned int id;
+
+	thread(const action &callback);
+	void start();
+	unsigned __stdcall kernel();
+	void suspend();
+	void resume();
+};
+
+//====================================================
+//= navigater container class
+//====================================================
+#include "fdg.h"
+struct navitem 
+{
+	string name;
+	fdg::navigater *nav;
+	int count;
+	std::ofstream *ofs;
+	navitem(
+		  const string &name = ""
+		, fdg::navigater *nav = 0
+	)
+	: name(name)
+	, nav(nav)
+	, count(0)
+	, ofs(0)
+	{
+	}
+};
+
+struct navmap : public std::map<uchar, navitem>
+{
+	navitem &navof(uchar key)
+	{
+		iterator i = find(key);
+		if (i == end())
+		{
+			insert(value_type(key, navitem()));
+			i = find(key);
+		}
+		return i->second;
+	}
+	void addnav(uchar key, const string &name, fdg::navigater *nav)
+	{
+		insert(value_type(key, navitem(name, nav)));
+	}
+	~navmap()
+	{
+		for (iterator i = begin(), e = end(); i != e; ++i)
+		{
+			delete i->second.ofs;
+		}
+	}
+
+};
+
+//====================================================
+//=　threading classes implementations
+//====================================================
+inline threading::object::object(HANDLE handle)
+: handle(handle)
+{ }
+inline DWORD threading::object::wait(DWORD milliseconds)
+{
+	return ::WaitForSingleObject(handle, milliseconds);
+}
+inline threading::event::event()
+: threading::object(::CreateEvent(NULL, FALSE, FALSE, NULL))
+{ }
+inline void threading::event::set()
+{
+	::SetEvent(handle);
+}
+inline void threading::event::reset()
+{
+	::ResetEvent(handle);
+}
+inline threading::thread::thread(const action &callback)
+: callback(callback), id(0)
+{ }
+inline void threading::thread::start()
+{
+	struct call
+	{
+		static unsigned __stdcall back(void *data)
+		{
+			return ((thread *)data)->kernel();
+		}
+	};
+	handle = (HANDLE)::_beginthreadex(NULL, 0, call::back, (void *)this, 0, &id);
+}
+inline unsigned __stdcall threading::thread::kernel()
+{
+	callback();
+	::CloseHandle(handle);
+	handle = 0;
+	return 0;
+}
+inline void threading::thread::suspend()
+{ 
+	::SuspendThread(handle);
+}
+inline void threading::thread::resume()
+{
+	::ResumeThread(handle);
+}
 #endif//__common_h__
