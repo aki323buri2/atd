@@ -14,7 +14,6 @@ struct path : public object
 	static string dirname(const string &path);
 	static string basename(const string &path);
 	static string filename(const string &path);
-	static int64 filesize(const string &path);
 
 	static string add_backslash			(const string &path);
 	static string add_extension			(const string &path, const string &extension);
