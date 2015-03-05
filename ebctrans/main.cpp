@@ -28,6 +28,7 @@ int frame(int argc, char **argv)
 
 #include "fdg.h"
 #include "ebcdic.h"
+#include "translator.h"
 #include <fstream>
 int run(int argc, char **argv)
 {
@@ -54,33 +55,24 @@ int run(int argc, char **argv)
 
 	//フルパス
 	ebc.path	= path::app_path(ebc.path);
-	//FDGロード
-	fdgs.clear();
-	fdgs = fdg.path.explode(";");
-	std::vector<fdg::navigater> navs;
-	for (strings::iterator i = fdgs.begin(), e = fdgs.end()
-		; i != e; ++i)
-	{
-		fdg.path = *i;
-		fdg.path = path::app_path(fdg.path);
-		fdg::fields fd;
-		fdg::navigater nav;
-		fd << fdg.path;
-		nav << fd;
-		navs.push_back(nav);
-	}
-	//レコード長
-	int rsize = 0;
-	for (std::vector<fdg::navigater>::iterator i = navs.begin(), e = navs.end()
-		; i != e; ++i)
-	{
-		fdg::navigater &nav = *i;
-		if (nav.rsize > rsize) rsize = nav.rsize;
-	}
 	
+	//navigater map　
+	navmap map;
+	strings ss = fdg.path.explode(";");
+	map.addnav('1', path::app_path(ss[0]));
+	map.addnav('2', path::app_path(ss[1]));
+	map.addnav('3', path::app_path(ss[2]));
+	
+	
+	//レコード長（一番長いやつ）
+	if (!map.rsizecheck())
+	{
+		throw generic::exception("fdg record sizes do not have the same value!");
+	}
+	int rsize = map.begin()->second.nav.rsize;
 	if (!rsize) throw generic::exception("record size is zero!");
 
-	//出力フォルダ
+	//出力フォルダ作成
 	string outd = path::make_sure_directory(path::app_path("output.d"));
 
 	//データレコード数算出
@@ -89,17 +81,10 @@ int run(int argc, char **argv)
 	cout << rows << endl;
 	if (!rows) throw generic::exception("record count is zero!");
 
-
-
-	//進捗
+	//進捗バー用
 	int blocks = 40;
 	int64 step = (rows + 1) / blocks;
 
-	//navigater map　
-	navmap map;
-	map.addnav('1', "TUF010", &navs[0]);
-	map.addnav('2', "TUF020", &navs[1]);
-	map.addnav('3', "TUF090", &navs[2]);
 
 	//ファイルオープン
 	std::ifstream ifs(ebc.path.sjis().c_str(), std::ios::binary);
@@ -121,7 +106,7 @@ int run(int argc, char **argv)
 			| std::ios::binary
 		);
 	}
-
+	//ファイル分割処理
 	for (int64 i = 0; i < rows; i++)
 	{
 		::memset(&buf[0], 0, buf.size());
@@ -146,23 +131,98 @@ int run(int argc, char **argv)
 	ifs.close();
 
 	//分割ファイルを一旦クローズ
+	map.filecloseall();
+
+	//分割ファイル読み取り＆書き込みストリームオープン
 	for (navmap::iterator i = map.begin(), e = map.end()
 		; i != e; ++i)
 	{
-		i->second.ofs->close();
+		navitem &item = i->second;
+		const string &name = item.name;
+		std::ifstream *&ifs = item.ifs;
+		std::ofstream *&ofs = item.ofs;
+		struct { string path; } input = { path::combine(outd, name) };
+		struct { string path; } output = { path::combine(outd, name+".json") };
+
+		ifs = new std::ifstream(input.path.sjis().c_str()
+			, std::ios::binary | std::ios::in
+		);
+		ofs = new std::ofstream(output.path.sjis().c_str()
+			, std::ios::out
+		);
 	}
 
-
-
-	for (navmap::iterator i = map.begin(), e = map.end()
-		; i != e; ++i)
-	{
-		uchar rid = i->first;
-		navitem nav = i->second;
-		cout << rid << " : " << nav.count << endl;
-	}
-
-	
+	map.invoke();
+	notify("done");
 
 	return 0;
+}
+void navitem::action()
+{
+	int rsize = nav.rsize;
+	string line(rsize, 0);
+	string ebc(rsize, 0);
+	string sjis;
+	string utf8;
+	struct { int64 lines; } done = {0};
+
+	std::ofstream &ofs = *(this->ofs);
+
+	ofs << "[\n";
+	while (ifs->read(&line[0], line.size()))
+	{
+		ofs << "\t";
+		ofs << (done.lines++ ? ", " : "  ");
+		ofs << "{\n";
+		int offset = 0;
+		for (fdg::navigater::iterator b = nav.begin(), i = b, e = nav.end()
+			; i != e; ++i)
+		{
+			ofs << "\t\t";
+			ofs << (i - b ? ", " : "  ");
+
+			fdg::field &field = *i;
+			int real = field.real;
+			const string &name = field.name;
+			ebc.resize(real, 0);
+			::memcpy(&ebc[0], &line[offset], real);
+			sjis = field.translate(ebc);
+			utf8 = sjis.utf8();
+
+			ofs << translator::json_escape(name).double_quote();
+			ofs << ": ";
+			ofs << translator::json_escape(utf8).double_quote();
+			ofs << "\n";
+
+			offset += real;
+		}
+		ofs << "}\n";
+	}
+	ofs << "]";
+	cout << name << " done : " << done.lines << "lines" << endl;
+}
+void navmap::cleanup()
+{
+	for (iterator i = begin(), e = end(); i != e; ++i)
+	{
+		navitem &item = i->second;
+		delete item.ifs;
+		delete item.ofs;
+		delete item.thread;
+		delete item.event;
+	}
+}
+void navmap::invoke()
+{
+	for (iterator i = begin(), e = end(); i != e; ++i)
+	{
+		navitem &item = i->second;
+		item.start();
+	}
+
+	while (true)
+	{
+		if (!running()) break;
+		app::sleep(1);
+	}
 }

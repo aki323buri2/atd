@@ -22,6 +22,10 @@ static struct app
 	{
 		return datetime().strftime();
 	}
+	static void sleep(DWORD milliseconds)
+	{
+		::Sleep(milliseconds);
+	}
 		
 } app;
 static void notify(const string &s)
@@ -95,33 +99,57 @@ struct threading::thread : public threading::object
 	unsigned __stdcall kernel();
 	void suspend();
 	void resume();
+	bool running() const;
 };
 
 //====================================================
 //= navigater container class
 //====================================================
 #include "fdg.h"
-struct navitem 
+struct navitem : public object
 {
 	string name;
-	fdg::navigater *nav;
+	string path;
+	fdg::navigater nav;
 	int count;
+	std::ifstream *ifs;
 	std::ofstream *ofs;
 	threading::thread *thread;
 	threading::event *event;
 
 	navitem(
-		  const string &name = ""
-		, fdg::navigater *nav = 0
+		  const string &path = ""
 	)
-	: name(name)
-	, nav(nav)
+	: name(path::filename(path.sjis()).utf8())
+	, path(path)
 	, count(0)
+	, ifs(0)
 	, ofs(0)
 	, thread(0)
 	, event(0)
 	{
+		//FDGロード
+		fdg::fields fd;
+		fd << path;
+		nav << fd;
 	}
+	void start()
+	{
+		thread = new threading::thread(
+			threading::thread::action(&navitem::action, this)
+		);
+		thread->start();
+	}
+	DWORD wait(DWORD milliseconds)
+	{
+		return thread->wait(milliseconds);
+	}
+	bool running() const 
+	{
+		return thread->running();
+	}
+	void action();//★
+
 };
 
 struct navmap : public std::map<uchar, navitem>
@@ -136,19 +164,54 @@ struct navmap : public std::map<uchar, navitem>
 		}
 		return i->second;
 	}
-	void addnav(uchar key, const string &name, fdg::navigater *nav)
+	void addnav(uchar key, const string &fdg)
 	{
-		insert(value_type(key, navitem(name, nav)));
+		insert(value_type(key, navitem(fdg)));
 	}
 	~navmap()
 	{
+		cleanup();
+	}
+	void filecloseall()
+	{
 		for (iterator i = begin(), e = end(); i != e; ++i)
 		{
-			delete i->second.ofs;
-			delete i->second.thread;
-			delete i->second.event;
+			std::ofstream *&ofs = i->second.ofs;
+			ofs->close();
+			//再利用のため破棄＆初期化
+			delete ofs;
+			ofs = 0;
 		}
 	}
+	int running() const
+	{
+		int running = 0;
+		for (const_iterator i = begin(), e = end(); i != e; ++i)
+		{
+			const navitem &item = i->second;
+			if (item.running()) running++;
+		}
+		return running;
+	}
+	bool rsizecheck() const
+	{
+
+		int rsize = 0;
+		for (const_iterator i = begin(), e = end(); i != e; ++i)
+		{
+			int newvalue = i->second.nav.rsize;
+			if (!rsize)
+			{
+				rsize = newvalue;
+			}
+			if (!rsize) return false;
+			if (rsize != newvalue) return false;
+		}
+		return true;
+	}
+
+	void cleanup();//★
+	void invoke();//★
 
 };
 
@@ -201,5 +264,9 @@ inline void threading::thread::suspend()
 inline void threading::thread::resume()
 {
 	::ResumeThread(handle);
+}
+bool threading::thread::running() const 
+{
+	return handle != 0;
 }
 #endif//__common_h__
