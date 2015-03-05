@@ -55,6 +55,9 @@ int run(int argc, char **argv)
 
 	//フルパス
 	ebc.path	= path::app_path(ebc.path);
+
+	//処理対象ファイル名
+	string filename = path::filename(ebc.path.sjis()).utf8();
 	
 	//navigater map　
 	navmap map;
@@ -94,8 +97,9 @@ int run(int argc, char **argv)
 		; i != e; ++i)
 	{
 		navitem &item = i->second;
-		string name = item.name;
+		string name = filename + "." + item.name;
 		string path = path::combine(outd, name);
+		cout << path << endl;
 		//ファイルクリア
 		{
 			std::ofstream ofs(path.sjis().c_str(), std::ios::out);
@@ -138,7 +142,7 @@ int run(int argc, char **argv)
 		; i != e; ++i)
 	{
 		navitem &item = i->second;
-		const string &name = item.name;
+		const string &name = filename + "." + item.name;
 		std::ifstream *&ifs = item.ifs;
 		std::ofstream *&ofs = item.ofs;
 		struct { string path; } input = { path::combine(outd, name) };
