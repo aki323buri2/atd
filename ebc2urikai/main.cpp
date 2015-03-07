@@ -173,7 +173,7 @@ int run(int argc, char **argv)
 
 		//振り分け行数インクリメント
 		invoker.judge = judge;
-		invoker.lines++;
+		invoker.lines.total++;
 
 		//進捗バー
 		done.lines += 1;
@@ -184,8 +184,12 @@ int run(int argc, char **argv)
 		}
 	}
 	cout << endl;
+
+	//ファイルクローズ
 	ifs.close();
 	invokers.ofclose();
+	notifyf(">> done.lines = %10lld", done.lines);
+	notifyf(">> done.bytes = %10lld", done.bytes);
 
 	//振り分け結果表示
 	for (invokers::iterator i = invokers.begin(), e = invokers.end()
@@ -193,7 +197,7 @@ int run(int argc, char **argv)
 	{
 		invoker &invoker = **i;
 		uchar judge = invoker.judge;
-		int64 lines = invoker.lines;
+		int64 lines = invoker.lines.total;
 		int64 bytes = path::filesize(invoker.ebc.sjis());
 		string basename = path::basename(invoker.ebc.sjis()).utf8();
 		notifyf("-- '%c' : %10s %10lld lines / %10lld bytes"
@@ -204,23 +208,98 @@ int run(int argc, char **argv)
 		);
 	}
 
-
-	notifyf(">> done.lines = %10lld", done.lines);
-	notifyf(">> done.bytes = %10lld", done.bytes);
-
+	//並列処理進捗通知ボードを初期化
+	boards.init(invokers);
 
 	//並列処理スタート＆全ｽﾚｯﾄﾞ完了待ち
+	cout << "...";
 	invokers.start();
 	invokers.wait();
+	cout << endl;
 
 	return 0;	
 }
+//====================================================
+//= 並列処理の内容
+//====================================================
 void invoker::run()
 {
-	notifyf("%s's navigater(rsize: %d) have %d fields"
-		, name.c_str()
-		, navigater.rsize
-		, navigater.size()
+	ifs.open(ebc.sjis().c_str()
+		, std::ios::binary
+		| std::ios::in
 	);
+	ofs.open(json.sjis().c_str()
+		, std::ios::binary
+		| std::ios::out
+	);
+	int64 total = lines.total;
+	int64 &done = lines.done;
 
+	ofs << "[\n";
+
+	//通知ボード取得
+	board::page &board = boards.find(judge)->second;
+
+	//パーセント進捗
+	struct { int pre, now, step; } percent = {0};
+	int &pre = percent.pre;
+	int &now = percent.now;
+	int &step = percent.step;
+
+	step = 5;
+
+	string line(navigater.rsize, 0);
+	string buf(0x100, 0);
+	string sjis, utf8;
+
+	while (ifs.read(&line[0], line.size()))
+	{
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		ofs << (done ? ", " : "  ");
+		ofs << "{\n";
+		
+		int offset = 0;
+		for (fdg::navigater::iterator 
+			  b = navigater.begin()
+			, i = b
+			, e = navigater.end()
+			; i != e
+			; ++i
+		)
+		{
+			ofs << "\t\t";
+			ofs << (i - b ? ", " : "  ");
+
+			fdg::field &field = *i;
+			int real = field.real;
+			const string &name = field.name;
+			buf.resize(real, 0);
+			::memcpy(&buf[0], &line[offset], real);
+			sjis = field.translate(buf);
+			utf8 = sjis.utf8();
+
+			ofs << translator::json_escape(name).double_quote();
+			ofs << ": ";
+			ofs << translator::json_escape(utf8).double_quote();
+			ofs << "\n";
+
+			offset += real;
+		}
+		ofs << "}\n";
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		done++;
+		now = (done * (int64)100) / total;
+		if ((now - pre) < step) continue;
+
+		pre = now;
+		board.percent = percent.now;
+		boards.update();//通知★
+	}
+	//ラスト
+	now = (done * (int64)100) / total;
+	boards.update();
+
+	ofs << "]";
+	ifs.close();
+	ofs.close();
 }

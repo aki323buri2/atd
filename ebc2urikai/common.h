@@ -6,6 +6,7 @@
 using namespace atd;
 #include "ebcdic.h"
 #include "fdg.h"
+#include "translator.h"
 int main(int argc, char **argv);
 int frame(int argc, char **argv);
 int run(int argc, char **argv);
@@ -143,12 +144,14 @@ struct invoker : public threading::thread
 	std::ifstream ifs;
 	std::ofstream ofs;
 	uchar judge;
-	int64 lines;
+	struct { int64 total, done; } lines;
+
 	invoker(const string &fdg)
 	: fdg(fdg)
 	, judge(0)
-	, lines(0)
 	{
+		lines.total = 0;
+		lines.done  = 0;
 		name = path::filename(fdg.sjis()).utf8();
 
 		fdg::fields fields;
@@ -198,6 +201,7 @@ struct invokers : public std::vector<invoker *>
 			i = erase(i);
 		}
 	}
+	//レコード長の不揃いをチェック
 	bool even() const
 	{
 		//レコード長が揃っているか？
@@ -221,7 +225,15 @@ struct invokers : public std::vector<invoker *>
 	{
 		return BETWEEN(0, offset, size() - 1) ? begin() + offset : end();
 	}
-
+	//ファイルクローズ
+	void fclose()
+	{
+		for (iterator i = begin(), e = end(); i != e; ++i)
+		{
+			(*i)->ifs.close();
+			(*i)->ofs.close();
+		}
+	}
 	void ifclose()
 	{
 		for (iterator i = begin(), e = end(); i != e; ++i)
@@ -237,4 +249,90 @@ struct invokers : public std::vector<invoker *>
 		}
 	}
 };
+//====================================================
+//= 並列処理進捗通知ボード
+//====================================================
+struct board 
+{
+	struct page;
+	struct list;
+};
+struct board::page : public object
+{
+	string name;
+	int percent;
+	page() : percent(0)
+	{
+	}
+};
+struct board::list : public std::map<uchar, board::page>
+{
+	void init(const invokers &invokers)
+	{
+		clear();
+		for (invokers::const_iterator i = invokers.begin(), e = invokers.end()
+			; i != e; ++i)
+		{
+			invoker &invoker = **i;
+
+			insert(value_type(invoker.judge, page()));
+			page &page = find(invoker.judge)->second;
+			page.name = invoker.name;
+		}
+	}
+	string status() const 
+	{
+		strings ss;
+		for (const_iterator i = begin(), e = end(); i != e; ++i)
+		{
+			const page &page = i->second;
+			const string &name = page.name;
+			int percent = page.percent;
+			string s = string::format("%-10s : %3d%%"
+				, name.c_str()
+				, percent
+			);
+			ss.entry(s);
+		}
+		return ss.implode(" / ");
+	}
+	void update() const
+	{
+		static struct mutex
+		{
+			CRITICAL_SECTION cs;
+			mutex()
+			{
+				::InitializeCriticalSection(&cs);
+			}
+			~mutex()
+			{
+				::DeleteCriticalSection(&cs);
+			}
+			void enter()
+			{
+				::EnterCriticalSection(&cs);
+			}
+			void leave()
+			{
+				::LeaveCriticalSection(&cs);
+			}
+		} mutex;
+		struct lock
+		{
+			struct mutex &mutex;
+			lock(struct mutex &mutex) : mutex(mutex)
+			{
+				mutex.enter();
+			}
+			~lock()
+			{
+				mutex.leave();
+			}
+		} lock(mutex);
+		cout << "\r";
+		cout << status();
+	}
+};
+static board::list boards;
 #endif//__common_h__
