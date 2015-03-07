@@ -100,17 +100,42 @@ int run(int argc, char **argv)
 	notifyf("*  lines count: %10lld lines *", lines);
 	notify ("**********************************");
 
-	//出力フォルダ作成
-	struct { string d; } out;
-	out.d = path::make_sure_directory(path::app_path("out.d").sjis()).utf8();
-	invokers.apply_outd(ebc.path, out.d);
-	notifyf(">> 出力フォルダ : %s", out.d.c_str());
 
 	//読み取りファイルオープン
 	std::ifstream ifs(ebc.path.sjis().c_str()
 		, std::ios::binary
 		| std::ios::in
 	);
+	
+	//出力フォルダ作成
+	struct { string d; } out;
+	out.d = path::make_sure_directory(path::app_path("out.d").sjis()).utf8();
+	notifyf(">> 出力フォルダ : %s", out.d.c_str());
+
+	//EBCDICファイル振り分け用ファイルオープン
+	string basename = path::basename(ebc.path.sjis()).utf8();
+	for (invokers::iterator i = invokers.begin(), e = invokers.end()
+		; i != e; ++i)
+	{
+		invoker &invoker = **i;
+		std::ofstream &ofs	= invoker.ofs;
+		string &name		= invoker.name;
+		string &ebc			= invoker.ebc;
+		string &json		= invoker.json;
+		ebc  = path::combine(out.d, basename + "." + name);
+		json = path::combine(out.d, basename + "." + name + ".json");
+		//クリア
+		ofs.open(ebc.sjis().c_str()
+			, std::ios::binary
+			| std::ios::out
+		);
+		ofs.close();
+		//追記
+		ofs.open(ebc.sjis().c_str()
+			, std::ios::binary
+			| std::ios::app
+		);
+	}
 
 	//カウンタ変数
 	struct { int64 bytes, lines; } done = {0};
@@ -124,24 +149,64 @@ int run(int argc, char **argv)
 
 	cout << ">> loading... ";
 	string line(rsize, 0);
+
 	while (ifs.read(&line[0], line.size()))
 	{
-		done.lines += 1;
-		done.bytes += line.size();
+		//末尾１バイトで判定
+		uchar judge = *(line.rbegin()); 
+		//EBCDIC変換
+		judge = ebcdic::tosjis(judge);
+		//'1' or '2' or ....
+		size_t offset = judge - '1';
+		//invokersのイテレータ取得
+		invokers::iterator i = invokers.invoker_of(offset);
+		if (i == invokers.end())
+		{
+			notifyf("!!!! '%c' is unknown judgement flag !!!!", judge);
+			throw generic::exception("invalid judgement flag !");
+		}
+
+		//振り分けファイルへの追記処理
+		invoker &invoker = **i;
+		std::ofstream &ofs = invoker.ofs;
+		ofs.write(&line[0], line.size());
+
+		//振り分け行数インクリメント
+		invoker.judge = judge;
+		invoker.lines++;
 
 		//進捗バー
+		done.lines += 1;
+		done.bytes += line.size();
 		if (done.lines % prog.step == 0)
 		{
 			cout << "#";
 		}
 	}
 	cout << endl;
-
 	ifs.close();
+	invokers.ofclose();
+
+	//振り分け結果表示
+	for (invokers::iterator i = invokers.begin(), e = invokers.end()
+		; i != e; ++i)
+	{
+		invoker &invoker = **i;
+		uchar judge = invoker.judge;
+		int64 lines = invoker.lines;
+		int64 bytes = path::filesize(invoker.ebc.sjis());
+		string basename = path::basename(invoker.ebc.sjis()).utf8();
+		notifyf("-- '%c' : %10s %10lld lines / %10lld bytes"
+			, judge
+			, basename.c_str()
+			, lines
+			, bytes
+		);
+	}
+
 
 	notifyf(">> done.lines = %10lld", done.lines);
 	notifyf(">> done.bytes = %10lld", done.bytes);
-
 
 
 	//並列処理スタート＆全ｽﾚｯﾄﾞ完了待ち

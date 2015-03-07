@@ -4,7 +4,8 @@
 #include "atd.h"
 #include <fstream>
 using namespace atd;
-#include <fdg.h>
+#include "ebcdic.h"
+#include "fdg.h"
 int main(int argc, char **argv);
 int frame(int argc, char **argv);
 int run(int argc, char **argv);
@@ -139,8 +140,14 @@ struct invoker : public threading::thread
 	string ebc;
 	string json;
 	fdg::navigater navigater;
+	std::ifstream ifs;
+	std::ofstream ofs;
+	uchar judge;
+	int64 lines;
 	invoker(const string &fdg)
 	: fdg(fdg)
+	, judge(0)
+	, lines(0)
 	{
 		name = path::filename(fdg.sjis()).utf8();
 
@@ -209,24 +216,25 @@ struct invokers : public std::vector<invoker *>
 		}
 		return true;
 	}
-	void apply_outd(const string &ebc, const string &outd)
-	{
-		struct { string path, name; } input;
-		input.path = ebc;
-		input.name = path::basename(input.path.sjis()).utf8();
-		for (iterator i = begin(), e = end(); i != e; ++i)
-		{
-			invoker *invoker = *i;
-			string &name	= invoker->name;
-			string &ebc		= invoker->ebc;
-			string &json	= invoker->json;
-			ebc  = path::combine(outd, input.name + "." + name);
-			json = path::combine(outd, ebc + ".json");
 
-			notify(ebc);
-			notify(json);
-		}
+	iterator invoker_of(size_t offset)
+	{
+		return BETWEEN(0, offset, size() - 1) ? begin() + offset : end();
 	}
 
+	void ifclose()
+	{
+		for (iterator i = begin(), e = end(); i != e; ++i)
+		{
+			(*i)->ifs.close();
+		}
+	}
+	void ofclose()
+	{
+		for (iterator i = begin(), e = end(); i != e; ++i)
+		{
+			(*i)->ofs.close();
+		}
+	}
 };
 #endif//__common_h__
