@@ -217,6 +217,21 @@ int run(int argc, char **argv)
 	invokers.wait();
 	cout << endl;
 
+	//変換JSONファイルのサイズを表示
+	for (invokers::iterator i = invokers.begin(), e = invokers.end()
+		; i != e; ++i)
+	{
+		invoker &invoker = **i;
+		uchar judge = invoker.judge;
+		int64 bytes = path::filesize(invoker.json.sjis());
+		string basename = path::basename(invoker.json.sjis()).utf8();
+		notifyf("-- '%c' : %10s %10lld bytes"
+			, judge
+			, basename.c_str()
+			, bytes
+		);
+	}
+
 	return 0;	
 }
 //====================================================
@@ -246,7 +261,7 @@ void invoker::run()
 	int &now = percent.now;
 	int &step = percent.step;
 
-	step = 5;
+	step = 1;
 
 	string line(navigater.rsize, 0);
 	string buf(0x100, 0);
@@ -267,7 +282,7 @@ void invoker::run()
 			; ++i
 		)
 		{
-			ofs << "\t\t";
+		//	ofs << "\t";
 			ofs << (i - b ? ", " : "  ");
 
 			fdg::field &field = *i;
