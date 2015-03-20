@@ -33,6 +33,8 @@ int run(int argc, char **argv)
 	backup["ebc.path"] = "..\\ebc\\FAXFILPF.KA4RDMLB";
 	backup["ebc.path"] = "..\\ebc\\FFX14052014025490";
 	backup["ebc.path"] = "..\\ebc\\FFX141026185451P1S4SERVE";
+	backup["ebc.path"] = "..\\ebc\\TDBK4D1.D0209";//債権債務得意先Ｍ（関西）
+	backup["fdg.path"] = "..\\fdg\\TXF010.TXT";//債権債務得意先ＭのＦＤＧ
 	manifest.supply(backup);
 	manifest.supply(namevalue(path::rename_extension(app.path, ".hack.json")));
 	manifest.commandline(argc, argv);	

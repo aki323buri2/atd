@@ -17,5 +17,5 @@ struct translator : public object
 
 	static string json_escape(const string &s);
 };
-//====================================================
+
 #endif//__translator_h__

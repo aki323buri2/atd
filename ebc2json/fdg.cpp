@@ -211,7 +211,7 @@ void fdg::fields::cobol(std::istream &is)
 			field.left	= match[ 7].toint();
 		//	field.right	= match[ 9].toint();
 			field.pack	= match[11].length();
-			field.occurs= match[13].toint();
+			field.occurs= match[14].toint();//ずれてた！
 
 			//小数点以下
 			//'V9(NN)'パターンと'V99...'パターン
@@ -233,8 +233,6 @@ void fdg::fields::cobol(std::istream &is)
 				//'V9(NN)'パターン
 				field.right = nn.toint();
 			}
-
-
 
 			field.key = field.name;
 
