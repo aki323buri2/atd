@@ -39,10 +39,14 @@ int run(int argc, char **argv)
 		args.value_of("fdg.path2"), 
 		args.value_of("fdg.path3"), 
 	};
-	ebc.path  = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\債権債務サンプルデータ（2015.02.09）\\TDBK1D1.D0209";
-	fdg.path1 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TUF010.TXT";
-	fdg.path2 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TUF020.TXT";
-	fdg.path3 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TUF090.TXT";
+	ebc.path  = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\債権債務サンプルデータ（2015.02.09）\\TDBK1D1.D0209";//売掛（関西）
+	ebc.path  = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\債権債務サンプルデータ（2015.02.09）\\TDBK2D1.D0209";//買掛（関西）
+	fdg.path1 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TUF010.TXT";//売掛ＨＥＡＤ
+	fdg.path2 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TUF020.TXT";//売掛ＢＯＤＹ
+	fdg.path3 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TUF090.TXT";//売掛ＮＹＵ
+	fdg.path1 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TCF040.TXT";//買掛ＢＯＤＹ※
+	fdg.path2 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TCF010.TXT";//買掛ＢＯＤＹ
+	fdg.path3 = "D:\\data2\\saikensaimu\\債権債務サンプルデータ\\データ退避ＣＯＰＹメンバ\\TCF040.TXT";//買掛ＫＥＳ
 
 	//コマンドライン引数でオーバーライド
 	args.commandline(argc, argv);
@@ -239,6 +243,13 @@ int run(int argc, char **argv)
 //====================================================
 void invoker::run()
 {
+	//ゼロディバイド対応
+	int64 total = lines.total;
+	int64 &done = lines.done;
+
+	if (!total) return;
+
+	
 	ifs.open(ebc.sjis().c_str()
 		, std::ios::binary
 		| std::ios::in
@@ -247,8 +258,6 @@ void invoker::run()
 		, std::ios::binary
 		| std::ios::out
 	);
-	int64 total = lines.total;
-	int64 &done = lines.done;
 
 	ofs << "[\n";
 
