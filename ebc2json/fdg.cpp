@@ -129,14 +129,23 @@ void fdg::field::translate(const string &ebc, string &sjis) const
 		else 
 		{
 			//符号付き項目の判定
-			// A : +0  J : -0
-			// B : +1  K : -1
-			// C : +2  L : -2
-			//   ...     ...
-			// I: +9   R : -9
-			int def = tail[0] - 'A';
-			if (def > 10) sjis = "-" + sjis;
-			sjis += string::format("%d", def % 10);
+			// '{' : +0  '}' : -0
+			// 'A' : +1  'J' : -1
+			// 'B' : +2  'K' : -2
+			// 'C' : +3  'L' : -3
+			//    ...       ...
+			// 'I' : +9  'R' : -9
+			uchar c = tail[0];
+			bool minus = false;
+			int n = 0;
+
+			if (false) { }
+			else if (c == '}') { n = 0; minus = false; }
+			else if (c == '{') { n = 0; minus = true ; }
+			else if (BETWEEN('A', c, 'I')) { n = c - 'A'; minus = false; }
+			else if (BETWEEN('J', c, 'R')) { n = c - 'J'; minus = true ; }
+			if (minus) sjis = "-" + sjis;
+			sjis += string::format("%d", n);
 		}
 	}
 
